@@ -1,5 +1,11 @@
 import React from 'react';
+import WorkoutTrackerDetails from './WorkoutTrackerDetails'
 
-const WorkoutTracker = (props) => (<div>Hello</div>);
+const WorkoutTrackerHeader = () => <div className="well"> <h1>Workout Tracker</h1> </div>
+
+const WorkoutTracker = (props) => (<div className="container">
+                                        <WorkoutTrackerHeader /> 
+                                         <WorkoutTrackerDetails />
+                                    </div>);
 
 export default WorkoutTracker;
