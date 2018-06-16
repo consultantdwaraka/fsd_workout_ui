@@ -1,17 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {Link, Switch, Route, Redirect} from 'react-router-dom';
+import ListWorkouts from './ListWorkoutTask';
+import CreateWorkout from './CreateWorkout';
+import Category from './Category';
+import TrackWorkout from './TrackWorkout';
 
 const style = {
     paddingRight: '20px',
     fontSize:'20px'
 }
+class WorkoutTrackerDetails extends Component {
 
-const WorkoutTrackerDetails = (props) => <div className="well"> 
-                                                <ul className="list-inline">
-                                                    <li style= {style} > <a href="#" > View All </a> </li>
-                                                    <li style= {style} > <a href="#" > Create </a> </li>
-                                                    <li style= {style} > <a href="#" > Category </a> </li>
-                                                    <li style= {style} > <a href="#" > Tracker </a> </li>
-                                                </ul>
-                                         </div> 
+    constructor(props) {
+        super(props);
+    }
 
+    render() {
+        return (
+            <div className="well"> 
+                                                
+                <ul className="list-inline">
+                    <li style= {style} > <Link to="/workouts" > View All </Link> </li>
+                    <li style= {style} > <Link to="/createWorkout" > Create </Link> </li> 
+                    <li style= {style} > <Link to="/category" > Category </Link> </li>
+                    <li style= {style} > <Link to="/trackWorkout" > Track </Link> </li>
+                </ul>
+                <hr/>
+                <Switch>
+                    <Route path="/workouts" component={ListWorkouts} />
+                    <Route path="/createWorkout" component={CreateWorkout} />
+                    <Route path="/category" component={Category} />
+                    <Route path="/trackWorkout" component={TrackWorkout} />
+                </Switch>
+            </div>  
+        );
+    }
+
+} 
 export default WorkoutTrackerDetails;
