@@ -1,4 +1,5 @@
 import React from 'react';
+import request from 'superagent';
 
 const ListCategories = (props) => <div className="row" style={{padding:"10px"}} key = {props.index}>
                                         <div className="col-sm-9"> {props.category} </div>
@@ -18,9 +19,22 @@ class Category extends React.Component {
         super(props);
         this.state = {categoryList:[]};
         this.addToCategories = this.addToCategories.bind();
+        this.fetchCategories();
     }
-    addToCategories = (category) => {this.setState(prevState => ( {categoryList:[category, ...prevState.categoryList,]}))}; 
-
+    addToCategories = (category) => {this.saveCategory(category);this.setState(prevState => ( {categoryList:[category, ...prevState.categoryList,]}))}; 
+    saveCategory = (category) => { request
+                                        .post('http://localhost:8080/addCategory')
+                                        .send({'category':category})
+                                        .set('Accept','application/json')
+                                        .then(res => {console.log('Done!..'); this.fetchCategories()})};
+    fetchCategories = () => {
+        request.get('http://localhost:8080/listCategories')
+        .then(res => {let categories = JSON.parse(res.text);
+                      this.setState(prevState => ( {categoryList:[...categories]}))})
+        .catch(error => {
+                console.log('Error fetching workout details!');
+        });
+    }
     render() {
         return (<div> <h3>Add Category </h3>
             <AddCategory categoryList= {this.addToCategories} > </AddCategory>
