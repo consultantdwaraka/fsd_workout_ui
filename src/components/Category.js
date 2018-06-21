@@ -1,9 +1,10 @@
 import React from 'react';
 import request from 'superagent';
+import DeleteCategory from './category/DeleteCategory';
 
 const ListCategories = (props) => <div className="row" style={{padding:"10px"}} key = {props.index}>
-                                        <div className="col-sm-9"> {props.category} </div>
-                                        <div className="col-sm-3"> <button> Edit </button> <button> Delete </button> </div> 
+                                        <div className="col-sm-9"> {props.category.category} </div>
+                                        <div className="col-sm-3"> <button> Edit </button> <DeleteCategory {...props}></DeleteCategory> </div> 
                                    </div> 
 
 
@@ -21,13 +22,14 @@ class Category extends React.Component {
         this.addToCategories = this.addToCategories.bind();
         this.fetchCategories();
     }
-    addToCategories = (category) => {this.saveCategory(category);this.setState(prevState => ( {categoryList:[category, ...prevState.categoryList,]}))}; 
+    addToCategories = (category) => {this.saveCategory(category)}; 
     saveCategory = (category) => { request
                                         .post('http://localhost:8080/addCategory')
                                         .send({'category':category})
                                         .set('Accept','application/json')
                                         .then(res => {console.log('Done!..'); this.fetchCategories()})};
     fetchCategories = () => {
+        console.log(`Fetching categories.....`);
         request.get('http://localhost:8080/listCategories')
         .then(res => {let categories = JSON.parse(res.text);
                       this.setState(prevState => ( {categoryList:[...categories]}))})
@@ -39,7 +41,7 @@ class Category extends React.Component {
         return (<div> <h3>Add Category </h3>
             <AddCategory categoryList= {this.addToCategories} > </AddCategory>
             {this.state.categoryList.map((category, index) => (
-            <ListCategories key ={index}  index={index} category={category} > </ListCategories> ))}
+            <ListCategories key ={index}  index={index} category={category} fetchCategories={this.fetchCategories} > </ListCategories> ))}
        </div>);
     }
 }

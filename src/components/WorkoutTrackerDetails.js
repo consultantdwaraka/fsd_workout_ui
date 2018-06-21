@@ -27,6 +27,7 @@ class WorkoutTrackerDetails extends Component {
                 </ul>
                 <hr/>
                 <Switch>
+                    <Redirect path="/" exact to="workouts" />
                     <Route path="/workouts" component={ListWorkouts} />
                     <Route path="/createWorkout" component={CreateWorkout} />
                     <Route path="/category" component={Category} />
@@ -35,6 +36,5 @@ class WorkoutTrackerDetails extends Component {
             </div>  
         );
     }
-
 } 
 export default WorkoutTrackerDetails;
