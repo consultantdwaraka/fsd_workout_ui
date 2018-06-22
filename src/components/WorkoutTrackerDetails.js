@@ -30,6 +30,7 @@ class WorkoutTrackerDetails extends Component {
                     <Redirect path="/" exact to="workouts" />
                     <Route path="/workouts" component={ListWorkouts} />
                     <Route path="/createWorkout" component={CreateWorkout} />
+                    <Route path="/editWorkout/:id" component={CreateWorkout} />
                     <Route path="/category" component={Category} />
                     <Route path="/trackWorkout" component={TrackWorkout} />
                 </Switch>
