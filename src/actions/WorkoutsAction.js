@@ -1,0 +1,1 @@
+export const listWorkouts = (workout) =>  ({type: 'LIST_WORKOUTS', payload: workout});

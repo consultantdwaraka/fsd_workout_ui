@@ -11,10 +11,10 @@ class CreateWorkout extends Component {
     
     componentDidMount() {
         this.fetchCategories();
-        console.log(`Object id: ${this.props.match.params.id}`);
     }
 
     getWorkoutInfo(id) {
+        if(id) {
         request.get(`http://localhost:8080/getWorkout?id=${id}`)
         .then(res => {let workout = JSON.parse(res.text);
             console.log(`This is a test: ${workout.title}`);
@@ -22,6 +22,7 @@ class CreateWorkout extends Component {
         .catch(error => {
                 console.log('Error fetching workout details!');
         });
+    }
     }
 
     fetchCategories = () => {
