@@ -4,7 +4,7 @@ import request from 'superagent';
 class CreateWorkout extends Component {
     constructor(props) {
         super(props);
-        this.state = {categoryList:[], categoryFormData:{}};
+        this.state = {categoryList:[], categoryFormData:{calories:0}};
         this.handleInputValue = this.handleInputValue.bind(this);
         this.handleFormSubmission = this.handleFormSubmission.bind(this);
     }
@@ -16,9 +16,7 @@ class CreateWorkout extends Component {
     getWorkoutInfo(id) {
         if(id) {
         request.get(`http://localhost:8080/getWorkout?id=${id}`)
-        .then(res => {let workout = JSON.parse(res.text);
-            console.log(`This is a test: ${workout.title}`);
-                      this.setState(prevState => Object.assign(prevState.categoryFormData, workout))})
+        .then(res => {this.setState(prevState => Object.assign(prevState.categoryFormData, JSON.parse(res.text)))})
         .catch(error => {
                 console.log('Error fetching workout details!');
         });
@@ -36,7 +34,6 @@ class CreateWorkout extends Component {
     }
     handleInputValue(event) {
         let element = {[event.target.name]:event.target.value}
-        console.log(element)
         this.setState((prevState) =>  Object.assign(prevState.categoryFormData, element));
     }
     handleFormSubmission(event) {
@@ -45,6 +42,16 @@ class CreateWorkout extends Component {
                 .send(this.state.categoryFormData)
                 .set('Accept', 'application/json')
                .then(res => this.props.history.push('/workouts'));
+    }
+
+    incrementCalaries = (event) => {
+        event.preventDefault();
+        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': ++prevState.categoryFormData.calories}));
+    }
+
+    decrementCalaries = (event) => {
+        event.preventDefault();
+        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': prevState.categoryFormData.calories> 0 ? --prevState.categoryFormData.calories:0}));
     }
 
     render() {
@@ -70,10 +77,10 @@ class CreateWorkout extends Component {
                         <input type="text" className="form-control" autoComplete = "off" name="calories" id="calories" value={this.state.categoryFormData.calories} onChange={this.handleInputValue}/>
                     </div>
                     <div className="col-sm-1">
-                        <button id="addCalories" > + </button>
+                        <button id="addCalories" onClick={this.incrementCalaries} > + </button>
                     </div>
                     <div className="col-sm-1">
-                        <button id="reduceCalories" > - </button>
+                        <button id="reduceCalories" onClick={this.decrementCalaries}> - </button>
                     </div>
                 </div>
                 <div className="form-group">
@@ -90,10 +97,10 @@ class CreateWorkout extends Component {
                 <div className="form-group">
                    {!this.props.match.params.id ? 
                     (<div className="col-sm-12">
-                        <button id="note" > Add Workout</button>
+                        <button type="button" class="btn btn-default" id="note" > Add Workout</button>
                     </div>) : (<div className="col-sm-12">
-                        <button id="note" > Edit Workout</button>
-                        <button id="note" style={{marginLeft:"10px"}} onClick={e => this.props.history.push('/workouts')}> Cancel</button>
+                        <button id="note" type="button" class="btn btn-default"> Edit Workout</button>
+                        <button id="note" type="button" class="btn btn-default" style={{marginLeft:"10px"}} onClick={e => this.props.history.push('/workouts')}> Cancel</button>
                     </div> )}
                 </div>
             </form>

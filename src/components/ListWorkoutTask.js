@@ -13,8 +13,8 @@ const ViewWorkout = (props) => (<div className="panel panel-default" key={props.
                                                         <div className="col-sm-4" > </div> 
                                                         <div className="col-sm-2" style={{paddingTop:"10px"}}> <Link to={`/editWorkout/${props.workout.id}`} className="btn btn-default"  > Edit </Link> </div> 
                                                         <div className="col-sm-2" style={{paddingTop:"10px"}}> <DeleteWorkout {...props}> </DeleteWorkout> </div>
-                                                        <div className="col-sm-2" style={{paddingTop:"10px"}}> <Link to="/startWorkout" className="btn btn-default"  > Start </Link> </div>
-                                                        <div className="col-sm-2" style={{paddingTop:"10px"}}> <Link to="/endWorkout" className="btn btn-default disabled"  > End </Link> </div>
+                                                        <div className="col-sm-2" style={{paddingTop:"10px"}}> <Link to={`/startWorkout/${props.workout.id}`} className={props.workout.startTime !== null?"btn btn-default disabled":"btn btn-default"}  > Start </Link> </div>
+                                                        <div className="col-sm-2" style={{paddingTop:"10px"}}> <Link to={`/endWorkout/${props.workout.id}`} className={props.workout.startTime === null?"btn btn-default disabled": props.workout.endTime===null?"btn btn-default":"btn btn-default disabled"}  > End </Link> </div>
                                                 </div> 
                                         </div>
                                 </div>)

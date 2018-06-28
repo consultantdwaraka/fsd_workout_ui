@@ -4,6 +4,8 @@ import ListWorkouts from './ListWorkoutTask';
 import CreateWorkout from './CreateWorkout';
 import Category from './Category';
 import TrackWorkout from './TrackWorkout';
+import StartWorkout from './Task/StartWorkout';
+import EndWorkout from './Task/EndWorkout';
 
 const style = {
     paddingRight: '20px',
@@ -33,6 +35,8 @@ class WorkoutTrackerDetails extends Component {
                     <Route path="/editWorkout/:id" component={CreateWorkout} />
                     <Route path="/category" component={Category} />
                     <Route path="/trackWorkout" component={TrackWorkout} />
+                    <Route path="/startWorkout/:id" component={StartWorkout} />
+                    <Route path="/endWorkout/:id" component={EndWorkout} />
                 </Switch>
             </div>  
         );
