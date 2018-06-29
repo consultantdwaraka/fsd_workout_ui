@@ -36,6 +36,7 @@ class CreateWorkout extends Component {
         let element = {[event.target.name]:event.target.value}
         this.setState((prevState) =>  Object.assign(prevState.categoryFormData, element));
     }
+
     handleFormSubmission(event) {
         event.preventDefault();
         request.post('http://localhost:8080/addWorkout')
@@ -62,19 +63,19 @@ class CreateWorkout extends Component {
                 <div className="form-group">
                     <label className="control-label col-sm-4" htmlFor="title">Title:</label>
                     <div className="col-sm-8">
-                        <input type="text" className="form-control" name= "title" id="title" value={this.state.categoryFormData.title} autoComplete="off" onChange={this.handleInputValue}/>
+                        <input type="text" className="form-control" name= "title" id="title" autoComplete="off" onChange={this.handleInputValue}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-4" htmlFor="note">Note:</label>
                     <div className="col-sm-8">
-                        <textarea className="form-control" name= "note" rows="5" value= {this.state.categoryFormData.note} id="note" onChange={this.handleInputValue}/>
+                        <textarea className="form-control" name= "note" rows="5" value= {this.state.categoryFormData.note?this.state.categoryFormData.note:""} id="note" onChange={this.handleInputValue}/>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-4" htmlFor="note">Calories Burnt Per Min:</label>
                     <div className="col-sm-6">
-                        <input type="text" className="form-control" autoComplete = "off" name="calories" id="calories" value={this.state.categoryFormData.calories} onChange={this.handleInputValue}/>
+                        <input type="text" className="form-control" autoComplete = "off" name="calories" id="calories" value={this.state.categoryFormData.calories?this.state.categoryFormData.calories:""} onChange={this.handleInputValue}/>
                     </div>
                     <div className="col-sm-1">
                         <button id="addCalories" onClick={this.incrementCalaries} > + </button>
@@ -97,10 +98,10 @@ class CreateWorkout extends Component {
                 <div className="form-group">
                    {!this.props.match.params.id ? 
                     (<div className="col-sm-12">
-                        <button type="button" class="btn btn-default" id="note" > Add Workout</button>
+                        <button  className="btn btn-default" id="note" > Add Workout</button>
                     </div>) : (<div className="col-sm-12">
-                        <button id="note" type="button" class="btn btn-default"> Edit Workout</button>
-                        <button id="note" type="button" class="btn btn-default" style={{marginLeft:"10px"}} onClick={e => this.props.history.push('/workouts')}> Cancel</button>
+                        <button id="note" className="btn btn-default"> Edit Workout</button>
+                        <button id="note" className="btn btn-default" style={{marginLeft:"10px"}} onClick={e => this.props.history.push('/workouts')}> Cancel</button>
                     </div> )}
                 </div>
             </form>
