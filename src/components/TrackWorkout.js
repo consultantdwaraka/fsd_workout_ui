@@ -1,6 +1,6 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-
+import request from 'superagent';
 
 const dataModel = (props) => ({
     labels: props.label,
@@ -57,8 +57,16 @@ class TrackWorkout extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {data: {week:[650, 590, 800, 810, 560, 550, 40], month:[650, 590, 800, 810], year:[650, 590, 800, 810, 560, 550, 40,50,100,100,150,140]},
+        this.state = {data: {week:[0,0,0,0,0,0,0], month:[0,0,0,0,0], year:[0,0,0,0,0,0,0,0,0,0,0,0]},
                      label: {week:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], month:['Week1', 'Week2', 'Week3', 'Week4'], year:['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}};
+    }
+    componentDidMount() {
+        this.trackWorkoutDetails();
+    }
+
+    trackWorkoutDetails = () => {
+        request.get('http://localhost:8080/trackWorkout')
+               .then(res => this.setState(prevState => Object.assign(prevState.data, {week:JSON.parse(res.text).dailyWorkouts}, {month:JSON.parse(res.text).weeklyWorkouts}, {year:JSON.parse(res.text).monthlyWorkouts})));
     }
 
     render() {

@@ -40,13 +40,13 @@ class EndWorkout extends React.Component {
         return (<form className="form-horizontal" onSubmit= {this.handleFormSubmission}>
                 <div className="form-group">
                     <div class="col-xs-12">
-                    <label className="control-label col-xs-12" htmlFor="heading" style={{textAlign:"center"}}>Start Workout</label>
+                    <label className="control-label col-xs-12" htmlFor="heading" style={{textAlign:"center"}}>End Workout</label>
                     </div>
                 </div>
                 <div className="form-group">
                 <label className="control-label col-xs-4" htmlFor="title">Title:</label>
                     <div class="col-xs-8">
-                        <input name="title" className="form-control" value= {this.state.workoutFormData.title?this.state.workoutFormData.titl:""} onChange={this.handleInputValue}/> 
+                        <input name="title" className="form-control" value= {this.state.workoutFormData.title?this.state.workoutFormData.title:""} onChange={this.handleInputValue}/> 
                     </div>
                 </div>
                 <div className="form-group">
