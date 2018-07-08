@@ -4,7 +4,7 @@ import AddCategory from './category/AddCategory';
 import DeleteCategory from './category/DeleteCategory';
 
 const ListCategories = (props) => <div className="row" style={{padding:"10px"}} key = {props.index}>
-                                        <div className="col-sm-9"> {props.category.category} </div>
+                                        <div className="col-sm-9" style={{textAlign:"left"}}> {props.category.category} </div>
                                         <div className="col-sm-3"> <button onClick={e => props.handleEditCategory(props.category)}> Edit </button> <DeleteCategory {...props}></DeleteCategory> </div> 
                                    </div> 
 
@@ -34,10 +34,12 @@ class Category extends React.Component {
 
     handleEditCategory = (category) => {
         this.setState({category});
+        this.setState({"action":"edit"})
      }
+
     render() {
-        return (<div> <h3>Add Category </h3>
-            <AddCategory categoryList= {this.addToCategories} defaultCategory= {this.state.category}> </AddCategory>
+        return (<div> 
+            <AddCategory categoryList= {this.addToCategories} defaultCategory= {this.state.category} action={this.state.action}> </AddCategory>
             {this.state.categoryList.map((category, index) => (
             <ListCategories key ={index}  index={index} category={category} handleEditCategory = {this.handleEditCategory} fetchCategories={this.fetchCategories} > </ListCategories> ))}
        </div>);

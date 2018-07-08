@@ -39,10 +39,12 @@ class CreateWorkout extends Component {
 
     handleFormSubmission(event) {
         event.preventDefault();
-        request.post('http://localhost:8080/addWorkout')
-                .send(this.state.categoryFormData)
-                .set('Accept', 'application/json')
-               .then(res => this.props.history.push('/workouts'));
+        if(this.state.categoryFormData.title && this.state.categoryFormData.category && this.state.categoryFormData.calories) {
+            request.post('http://localhost:8080/addWorkout')
+                    .send(this.state.categoryFormData)
+                    .set('Accept', 'application/json')
+                .then(res => this.props.history.push('/workouts'));
+        }
     }
 
     incrementCalaries = (event) => {
@@ -58,12 +60,12 @@ class CreateWorkout extends Component {
     render() {
         return (
             <div>
-            <h2> Add Workout</h2>
+            {!this.props.match.params.id ? <h2> Add Workout</h2>:<h2> Edit Workout</h2> }
             <form className="form-horizontal" onSubmit= {this.handleFormSubmission}>
                 <div className="form-group">
                     <label className="control-label col-sm-4" htmlFor="title">Title:</label>
                     <div className="col-sm-8">
-                        <input type="text" className="form-control" name= "title" id="title" autoComplete="off" onChange={this.handleInputValue}/>
+                        <input type="text" className="form-control" name= "title" value={this.state.categoryFormData.title?this.state.categoryFormData.title:""} id="title" autoComplete="off" onChange={this.handleInputValue}/>
                     </div>
                 </div>
                 <div className="form-group">
@@ -98,10 +100,10 @@ class CreateWorkout extends Component {
                 <div className="form-group">
                    {!this.props.match.params.id ? 
                     (<div className="col-sm-12">
-                        <button  className="btn btn-default" id="note" > Add Workout</button>
+                        <button  className={this.state.categoryFormData.title && this.state.categoryFormData.category && this.state.categoryFormData.calories? "btn btn-default":"btn btn-default disabled"} id="note" > Add Workout</button>
                     </div>) : (<div className="col-sm-12">
                         <button id="note" className="btn btn-default"> Edit Workout</button>
-                        <button id="note" className="btn btn-default" style={{marginLeft:"10px"}} onClick={e => this.props.history.push('/workouts')}> Cancel</button>
+                        <button id="note" className="btn btn-default" style={{marginLeft:"10px"}}  onClick={e => this.props.history.push('/workouts')}> Cancel</button>
                     </div> )}
                 </div>
             </form>

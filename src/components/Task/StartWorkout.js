@@ -58,7 +58,7 @@ class StartWorkout extends React.Component {
                 <div className="form-group">
                 <label className="control-label col-xs-4" htmlFor="startDate">Start Date:</label>
                     <div class="col-xs-8">
-                        <input  name="startDate" className="form-control"   value ={this.state.workoutFormData.startDate} onBlur={this.handleInputValue}/>
+                        <input  name="startDate" className="form-control"   value ={this.state.workoutFormData.startDate} onChange={this.handleInputValue}/>
                     </div>
                 </div>
                 <div className="form-group">
@@ -69,7 +69,7 @@ class StartWorkout extends React.Component {
                 </div>
                 <div className="form-group">
                     <div class="col-xs-12">
-                        <button type="submit" class="btn btn-default"> Start</button>  <button type="button" class="btn btn-default"> Cancel</button>
+                        <button type="submit" class="btn btn-default"> Start</button>  <button type="button" class="btn btn-default" onClick={e => this.props.history.push('/workouts')}> Cancel</button>
                     </div>
                 </div>
                     
