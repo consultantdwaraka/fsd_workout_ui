@@ -49,12 +49,12 @@ class CreateWorkout extends Component {
 
     incrementCalaries = (event) => {
         event.preventDefault();
-        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': ++prevState.categoryFormData.calories}));
+        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': prevState.categoryFormData.calories? (Number.parseFloat(prevState.categoryFormData.calories) + 0.1).toPrecision(3):0.1}));
     }
 
     decrementCalaries = (event) => {
         event.preventDefault();
-        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': prevState.categoryFormData.calories> 0 ? --prevState.categoryFormData.calories:0}));
+        this.setState((prevState) => Object.assign(prevState.categoryFormData, {'calories': prevState.categoryFormData.calories> 0 ? Number.parseFloat(prevState.categoryFormData.calories - 0.1).toPrecision(3):0.1}));
     }
 
     render() {
