@@ -34,6 +34,7 @@ class AddCategory extends Component {
     render() {
         return (<div>
                 <h3>{this.state.action? 'Edit Category':'Add Category' } </h3>
+                
                 <div className="row" style={{padding:"10px"}}>
                     <div className="col-sm-9" style={{textAlign:"left"}}> <input name="category" value ={this.state.category} type="text" style={{width:"100%"}} onBlur= {e => this.handleInputValue(e)}/></div>
                     <div className="col-sm-3"> <button onClick={ ()=> {if(this.validate()) {this.props.categoryList({category:this.state.category, id:this.props.defaultCategory.id});  this.setState({category:''})}}}> + </button> </div> 

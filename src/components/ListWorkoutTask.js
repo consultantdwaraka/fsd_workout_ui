@@ -33,7 +33,7 @@ class ListWorkoutTask extends Component {
 
         constructor(props) {
                 super(props)
-                this.state = {data:[]};
+                this.state = {data:[], filterContent:''};
                 this.getWorkoutList = this.getWorkoutList.bind(this);
         }
         componentDidMount() {
@@ -47,10 +47,21 @@ class ListWorkoutTask extends Component {
                         console.log('Error fetching workout details!');
                 });
         }
+        filterContent = (event) => {
+                console.log(event.target.value);
+                this.setState({"filterContent":event.target.value});
+        }
         render() {
-                return (
-                        <div> { this.state.data.map((workout, index) => <ViewWorkout key={index} workout={workout} getWorkoutList= {this.getWorkoutList} index={index}> </ViewWorkout>)}</div>     
-                );
+                return (<div>
+                        <div class="row"> 
+                                <div class="col-xs-12">
+                                        <div class="form-group">
+                                                <input type="text" class="form-control" style={{width:"100%" }} placeholder="Search" onChange={this.filterContent}/>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="row"> { this.state.data.filter(workout => workout.title.includes(this.state.filterContent) || !this.state.filterContent ).map((workout, index) => <ViewWorkout key={index} workout={workout} getWorkoutList= {this.getWorkoutList} index={index}> </ViewWorkout>)}</div>     
+                </div>);
         }
 } 
 export default ListWorkoutTask;
