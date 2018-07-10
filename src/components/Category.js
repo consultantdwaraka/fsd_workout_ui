@@ -12,10 +12,11 @@ const ListCategories = (props) => <div className="row" style={{padding:"10px"}} 
 class Category extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {categoryList:[], category:{}};
+        this.state = {categoryList:[], category:{}, filterContent:''};
         this.addToCategories = this.addToCategories.bind();
         this.fetchCategories();
     }
+
     addToCategories = (category) => {this.saveCategory(category)}; 
     saveCategory = (category) => { request
                                         .put('http://localhost:8080/addCategory')
@@ -37,10 +38,14 @@ class Category extends React.Component {
         this.setState({"action":"edit"})
      }
 
+      filterContent = (element) => {
+          this.setState({filterContent:element.target.value});
+      }
+
     render() {
         return (<div> 
-            <AddCategory categoryList= {this.addToCategories} defaultCategory= {this.state.category} action={this.state.action}> </AddCategory>
-            {this.state.categoryList.map((category, index) => (
+            <AddCategory categoryList= {this.addToCategories} defaultCategory= {this.state.category} action={this.state.action} filterContent={this.filterContent}> </AddCategory>
+            {this.state.categoryList.filter(category => category.category.includes(this.state.filterContent)).map((category, index) => (
             <ListCategories key ={index}  index={index} category={category} handleEditCategory = {this.handleEditCategory} fetchCategories={this.fetchCategories} > </ListCategories> ))}
        </div>);
     }
